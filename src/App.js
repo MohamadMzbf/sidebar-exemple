@@ -7,21 +7,29 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { useState, useEffect } from "react";
+import DialogComponent from "./DialogComponent";
 
 function App() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
 
+  const [OpenDialog , setOpenDialog] = useState(false);
+
   const toggle = () => {
     toggleSidebar();
     if (toggled) {
-      console.log(true);
+      
       collapseSidebar();
     } else {
-      console.log(false);
+  
       collapseSidebar();
     }
   };
+
+  const handleDialog = () => {
+    toggle();
+    setOpenDialog(true);
+  }
 
   return (
     <div
@@ -36,19 +44,19 @@ function App() {
         style={{ height: "100vh" }}
       >
         {/* {!broken && ( */}
-        <Menu>
+        <Menu >
           <MenuItem
             icon={<MenuOutlinedIcon />}
-            // onClick={() => {
-            //   collapseSidebar();
-            // }}
+             onClick={() => {
+               collapseSidebar();
+             }}
             style={{ textAlign: "center" }}
           >
             {" "}
             <h2>Admin</h2>
           </MenuItem>
 
-          <MenuItem icon={<HomeOutlinedIcon />}>Home</MenuItem>
+          <MenuItem icon={<HomeOutlinedIcon />} onClick={() => {handleDialog()}} >Home</MenuItem>
           <MenuItem icon={<PeopleOutlinedIcon />}>Team</MenuItem>
           <MenuItem icon={<ContactsOutlinedIcon />}>Contacts</MenuItem>
           <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
@@ -67,7 +75,9 @@ function App() {
           React-Pro-Sidebar
         </h1>
         {toggled ? (
-          <h1 style={{ color: "white", marginLeft: "5rem" }}>Toggled</h1>
+          <>
+            <h1 style={{ color: "white", marginLeft: "5rem" }}>Toggled</h1>
+            <DialogComponent open={OpenDialog}/></>
         ) : (
           <h1 style={{ color: "white", marginLeft: "5rem" }}>Not Toggled</h1>
         )}
